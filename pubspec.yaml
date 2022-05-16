@@ -37,6 +37,7 @@ dependencies:
   get: ^4.6.3
   get_storage: ^2.0.3
   google_sign_in: ^5.3.1
+  speech_to_text: ^5.5.0
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ninjastudy_task/views/home_page.dart';
 
 class GoogleSignInController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -9,19 +10,22 @@ class GoogleSignInController extends GetxController {
     print("Google signin started");
 
     try {
-      var signInResult = await _googleSignIn.signIn();
-      print(signInResult);
+      googleAccount.value = await _googleSignIn.signIn();
+      if (googleAccount.value != null) {
+        Get.offAll(HomePage());
+      }
+      print(googleAccount);
     } catch (error) {
       print(error);
     }
   }
 
-  Future<dynamic> signUp() async {
+  Future<dynamic> signOut() async {
     print("Google signUp started");
 
     try {
-      var signUpResult = await _googleSignIn.signIn();
-      print(signUpResult);
+      googleAccount.value = await _googleSignIn.signOut();
+      print(googleAccount);
     } catch (error) {
       print(error);
     }

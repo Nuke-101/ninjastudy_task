@@ -15,8 +15,8 @@ class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  final googleSignInController = Get.put(GoogleSignInController());
-  final localSignInController = Get.put(LocalStorageAuthentication());
+  final googleSignInController = Get.find<GoogleSignInController>();
+  final localSignInController = Get.find<LocalStorageAuthentication>();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,12 @@ class LoginPage extends StatelessWidget {
                               onTap: () {
                                 final email = emailController.text.trim();
                                 final password = passwordController.text.trim();
-                                localSignInController.signIn(email, password);
+                                if (email.isEmpty || password.isEmpty) {
+                                  Get.snackbar(
+                                      "Error", "Email or Password is empty");
+                                } else {
+                                  localSignInController.signIn(email, password);
+                                }
                               },
                               buttonText: "Login",
                               color: accentColor,

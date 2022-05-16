@@ -35,7 +35,6 @@ class LocalStorageAuthentication extends GetxController {
     try {
       var storedEmail = storage.read("email");
       var storedPassword = storage.read("password");
-
       if (storedEmail == email && storedPassword == password) {
         Get.offAll(const HomePage());
       }

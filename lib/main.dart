@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:ninjastudy_task/controllers/google_signin_controller.dart';
+import 'package:ninjastudy_task/controllers/local_storage_controller.dart';
 import 'package:ninjastudy_task/views/colors.dart';
 import 'package:ninjastudy_task/views/login_page.dart';
 
 void main() async {
   await GetStorage.init();
+  final googleSignInController = Get.put(GoogleSignInController());
+  final localSignInController = Get.put(LocalStorageAuthentication());
+
   runApp(const MyApp());
 }
 
