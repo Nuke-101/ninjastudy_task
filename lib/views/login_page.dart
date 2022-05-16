@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ninjastudy_task/controllers/google_signin_controller.dart';
 import 'package:ninjastudy_task/views/colors.dart';
+import 'package:ninjastudy_task/views/widgets/button_builder.dart';
 import 'package:ninjastudy_task/views/widgets/input_builder.dart';
 
 class LoginPage extends StatelessWidget {
@@ -7,6 +10,8 @@ class LoginPage extends StatelessWidget {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  final googleSignInController = Get.put(GoogleSignInController());
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +58,29 @@ class LoginPage extends StatelessWidget {
                       ),
                       PasswordInputBuilder(
                         fieldController: passwordController,
-                        inputHead: "Password",
-                        hintText: "Enter your password",
-                        type: "password",
                       ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      FlatButtonBuilder(
+                        onTap: () {},
+                        buttonText: "Login",
+                        color: accentColor,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      GetBuilder<GoogleSignInController>(
+                          init: GoogleSignInController(),
+                          builder: (controller) {
+                            return FlatButtonBuilder(
+                              onTap: () {
+                                controller.signIn();
+                              },
+                              buttonText: "Login with Google",
+                              color: accentColor,
+                            );
+                          }),
                     ],
                   ),
                 )

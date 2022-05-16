@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Ninja Study',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
