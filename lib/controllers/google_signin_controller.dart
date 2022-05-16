@@ -15,4 +15,15 @@ class GoogleSignInController extends GetxController {
       print(error);
     }
   }
+
+  Future<dynamic> signUp() async {
+    print("Google signUp started");
+
+    try {
+      var signUpResult = await _googleSignIn.signIn();
+      print(signUpResult);
+    } catch (error) {
+      print(error);
+    }
+  }
 }

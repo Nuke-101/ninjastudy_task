@@ -5,12 +5,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:ninjastudy_task/controllers/google_signin_controller.dart';
 import 'package:ninjastudy_task/controllers/local_storage_controller.dart';
 import 'package:ninjastudy_task/views/colors.dart';
-import 'package:ninjastudy_task/views/signup_page.dart';
+import 'package:ninjastudy_task/views/login_page.dart';
 import 'package:ninjastudy_task/views/widgets/button_builder.dart';
 import 'package:ninjastudy_task/views/widgets/input_builder.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  SignUpPage({Key? key}) : super(key: key);
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
                           children: <Widget>[
                             const SizedBox(height: 40),
                             Text(
-                              "Login",
+                              "SignUp",
                               style: TextStyle(
                                 fontSize: 30,
                                 color: defTextColor,
@@ -74,9 +74,9 @@ class LoginPage extends StatelessWidget {
                               onTap: () {
                                 final email = emailController.text.trim();
                                 final password = passwordController.text.trim();
-                                localSignInController.signIn(email, password);
+                                localSignInController.signUp(email, password);
                               },
-                              buttonText: "Login",
+                              buttonText: "SignUp",
                               color: accentColor,
                             ),
                             const SizedBox(
@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
                                     onTap: () {
                                       googleController.signIn();
                                     },
-                                    buttonText: "Login with Google",
+                                    buttonText: "SignUp with Google",
                                     color: accentColor,
                                   );
                                 }),
@@ -101,7 +101,7 @@ class LoginPage extends StatelessWidget {
                                   text: TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: "Don't have an account? ",
+                                        text: "Already have an account? ",
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: defTextColor,
@@ -111,9 +111,9 @@ class LoginPage extends StatelessWidget {
                                       TextSpan(
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            Get.offAll(() => SignUpPage());
+                                            Get.offAll(() => LoginPage());
                                           },
-                                        text: "Register",
+                                        text: "Login",
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: defTextColor,
