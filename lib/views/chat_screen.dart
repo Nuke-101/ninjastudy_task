@@ -53,11 +53,15 @@ class ChatScreen extends GetView<ChatController> {
           const SizedBox(
             height: 20,
           ),
-          const Expanded(
+          Expanded(
             child: SingleChildScrollView(
-              child: ChatChip(
-                text: "Hello",
-              ),
+              child: FutureBuilder(
+                  future: controller.getDialogues(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    return const ChatChip(
+                      text: "Hello",
+                    );
+                  }),
             ),
           ),
           ConstrainedBox(
@@ -80,10 +84,14 @@ class ChatScreen extends GetView<ChatController> {
                   right: 5,
                   child: Obx(
                     () => GestureDetector(
-                      onTap: () {
-                        controller.listen();
+                      onTapDown: (details) {
+                        controller.startListening(details);
                       },
-                      child: Container(
+                      onTapUp: (details) async {
+                        controller.stopListening(details);
+                        controller.spokenText.value = "";
+                      },
+                      child: AnimatedContainer(
                         height: 50,
                         width: 50,
                         decoration: BoxDecoration(
@@ -92,6 +100,7 @@ class ChatScreen extends GetView<ChatController> {
                               : accentColor.withOpacity(.9),
                           borderRadius: BorderRadius.circular(15),
                         ),
+                        duration: Duration(milliseconds: 200),
                         child: Center(
                           child: Icon(
                             controller.isListening.value

@@ -18,6 +18,7 @@ class ChatChip extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 200),
         child: Container(
+          margin: EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: const BoxDecoration(
               color: accentColor,
