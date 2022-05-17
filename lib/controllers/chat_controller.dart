@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ninjastudy_task/controllers/conversation_controller.dart';
 import 'package:ninjastudy_task/model/chat_model.dart';
-import 'package:ninjastudy_task/views/widgets/chat_chip.dart';
+import 'package:ninjastudy_task/model/conversation_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,11 +20,12 @@ class ChatController extends GetxController {
 
   List<Chat> dialogues = [];
 
-  List chats = [];
+  List<Chat> chats = [];
+
+  final conversationController = Get.find<ConversationController>();
 
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     speechToText = SpeechToText();
     dialogues = await fetchDialogs();
@@ -32,16 +34,35 @@ class ChatController extends GetxController {
 
   Future<dynamic> getDialogues() async {
     if (dialogNumber < dialogues.length) {
-      if (dialogNumber == 0 ||
-          spokenText.value.toLowerCase() ==
-              dialogues[dialogNumber - 1].humanSentence.toLowerCase()) {
+      if (dialogNumber == 0) {
         chats.add(dialogues[dialogNumber]);
+
+        conversationController.conversation
+            .add(Conversation(chats, chats[dialogNumber].humanSentence));
         dialogNumber++;
         update();
-      } else {
+        return;
+      } else if (dialogNumber > 0 &&
+          spokenText.value ==
+              dialogues[dialogNumber - 1]
+                  .humanSentence
+                  .replaceAll(",", "")
+                  .toLowerCase()) {
+        chats.add(dialogues[dialogNumber]);
+        conversationController.conversation.removeAt(0);
+        conversationController.conversation
+            .add(Conversation(chats, chats[dialogNumber].humanSentence));
+        dialogNumber++;
+        await Future.delayed(const Duration(milliseconds: 500));
+
         update();
         return;
+      } else {
+        Get.snackbar("Error", "Please speak the sentence correctly!");
+        return;
       }
+    } else {
+      Get.snackbar("Hooray", "Task completed!");
     }
   }
 
@@ -79,9 +100,12 @@ class ChatController extends GetxController {
       isListening.value = true;
       speechToText.listen(
         listenMode: ListenMode.dictation,
-        onResult: (value) {
+        onResult: (value) async {
           spokenText.value = value.recognizedWords;
-          getDialogues();
+          if (value.finalResult) {
+            await getDialogues();
+            spokenText.value = "";
+          }
         },
       );
     }
@@ -90,6 +114,5 @@ class ChatController extends GetxController {
   void stopListening(TapUpDetails details) async {
     await speechToText.stop();
     isListening.value = false;
-    spokenText.value = "";
   }
 }

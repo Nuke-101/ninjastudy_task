@@ -2,8 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:ninjastudy_task/controllers/google_signin_controller.dart';
-import 'package:ninjastudy_task/controllers/local_storage_controller.dart';
+import 'package:ninjastudy_task/controllers/auth_controller.dart';
 import 'package:ninjastudy_task/views/colors.dart';
 import 'package:ninjastudy_task/views/signup_page.dart';
 import 'package:ninjastudy_task/views/widgets/button_builder.dart';
@@ -15,8 +14,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  final googleSignInController = Get.find<GoogleSignInController>();
-  final localSignInController = Get.find<LocalStorageAuthentication>();
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +24,8 @@ class LoginPage extends StatelessWidget {
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
-            child: GetBuilder<LocalStorageAuthentication>(
-                init: LocalStorageAuthentication(),
+            child: GetBuilder<AuthController>(
+                init: AuthController(),
                 builder: (localController) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,7 +76,7 @@ class LoginPage extends StatelessWidget {
                                   Get.snackbar(
                                       "Error", "Email or Password is empty");
                                 } else {
-                                  localSignInController.signIn(email, password);
+                                  authController.signIn(email, password);
                                 }
                               },
                               buttonText: "Login",
@@ -87,12 +85,12 @@ class LoginPage extends StatelessWidget {
                             const SizedBox(
                               height: 30,
                             ),
-                            GetBuilder<GoogleSignInController>(
-                                init: GoogleSignInController(),
+                            GetBuilder<AuthController>(
+                                init: AuthController(),
                                 builder: (googleController) {
                                   return FlatButtonBuilder(
                                     onTap: () {
-                                      googleController.signIn();
+                                      googleController.googleSignIn();
                                     },
                                     buttonText: "Login with Google",
                                     color: accentColor,

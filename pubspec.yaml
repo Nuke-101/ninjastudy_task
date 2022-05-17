@@ -39,6 +39,7 @@ dependencies:
   google_sign_in: ^5.3.1
   speech_to_text: ^5.5.0
   http: ^0.13.4
+  
 
 dev_dependencies:
   flutter_test:

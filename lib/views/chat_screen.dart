@@ -3,6 +3,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:ninjastudy_task/controllers/chat_controller.dart';
+import 'package:ninjastudy_task/controllers/conversation_controller.dart';
+import 'package:ninjastudy_task/model/conversation_model.dart';
 import 'package:ninjastudy_task/views/colors.dart';
 import 'package:ninjastudy_task/views/widgets/chat_chip.dart';
 
@@ -10,7 +12,9 @@ class ChatScreen extends GetView<ChatController> {
   ChatScreen({Key? key, required this.category}) : super(key: key);
   final String category;
 
-  final localSignInController = Get.put(ChatController());
+  final chatController = Get.put(ChatController());
+
+  final conversationController = Get.find<ConversationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class ChatScreen extends GetView<ChatController> {
           ),
           onPressed: () {
             Navigator.pop(context);
-            Navigator.pop(context);
+            conversationController.update();
           },
         ),
         title: Text(
@@ -60,6 +64,7 @@ class ChatScreen extends GetView<ChatController> {
                 init: ChatController(),
                 builder: (chatController) {
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       for (int i = 0; i < chatController.chats.length; i++)
                         Column(
@@ -71,7 +76,47 @@ class ChatScreen extends GetView<ChatController> {
                                 text: chatController.chats[i].humanSentence,
                                 isHuman: true),
                           ],
-                        )
+                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Speak the  ",
+                            style: TextStyle(
+                              color: defTextColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                          Container(
+                            height: 25,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: accentLight,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                " bubble text ",
+                                style: TextStyle(
+                                  color: white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Text(
+                            "  to continue",
+                            style: TextStyle(
+                              color: defTextColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   );
                 },
@@ -114,7 +159,7 @@ class ChatScreen extends GetView<ChatController> {
                               : accentColor.withOpacity(.9),
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        duration: Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 200),
                         child: Center(
                           child: Icon(
                             controller.isListening.value
