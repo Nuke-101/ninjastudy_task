@@ -7,7 +7,6 @@ import 'package:ninjastudy_task/views/login_page.dart';
 class AuthController extends GetxController {
   final storage = GetStorage();
 
-  var currentGoogleAccount = Rx<GoogleSignInAccount?>(null);
   var isLocalLogin = false.obs;
   var isGoogleLogin = false.obs;
 

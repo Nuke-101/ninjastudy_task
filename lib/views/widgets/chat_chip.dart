@@ -28,18 +28,19 @@ class ChatChip extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 5),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               decoration: BoxDecoration(
-                  color: isHuman ? accentLight : accentColor,
-                  borderRadius: isHuman
-                      ? const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        )
-                      : const BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        )),
+                color: isHuman ? accentLight : accentColor,
+                borderRadius: isHuman
+                    ? const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      )
+                    : const BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+              ),
               child: Text(
                 text,
                 style: textStyleMontserratL(16, white),

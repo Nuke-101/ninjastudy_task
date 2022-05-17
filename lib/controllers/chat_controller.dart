@@ -71,14 +71,12 @@ class ChatController extends GetxController {
   Future fetchDialogs() async {
     final url =
         Uri.https("my-json-server.typicode.com", "tryninjastudy/dummyapi/db");
-    print(url);
+
     var response = await http.get(url);
     List<Chat> dialogues = [];
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       List<dynamic> dialoguesJson = jsonResponse["restaurant"];
-      print(dialoguesJson);
-      print(jsonResponse);
 
       for (int i = 0; i < dialoguesJson.length; i++) {
         dialogues.add(Chat.fromJson(dialoguesJson[i]));

@@ -25,110 +25,111 @@ class LoginPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             child: GetBuilder<AuthController>(
-                init: AuthController(),
-                builder: (localController) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        alignment: const Alignment(0.0, 0.0),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 40),
-                            Text(
-                              "Login",
-                              style: textStyleMontserratM(28, defTextColor),
-                            ),
-                          ],
-                        ),
+              init: AuthController(),
+              builder: (localController) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      alignment: const Alignment(0.0, 0.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 40),
+                          Text(
+                            "Login",
+                            style: textStyleMontserratM(28, defTextColor),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 50),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 5.0,
-                          horizontal: 20,
-                        ),
-                        child: Column(
-                          children: [
-                            InputBuilder(
-                              fieldController: emailController,
-                              inputHead: "Email",
-                              hintText: "Enter your Email",
-                              type: "email",
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            PasswordInputBuilder(
-                              fieldController: passwordController,
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            FlatButtonBuilder(
-                              onTap: () {
-                                final email = emailController.text.trim();
-                                final password = passwordController.text.trim();
-                                if (email.isEmpty || password.isEmpty) {
-                                  Get.snackbar(
-                                      "Error", "Email or Password is empty");
-                                } else {
-                                  authController.signIn(email, password);
-                                }
-                              },
-                              buttonText: "Login",
-                              color: accentColor,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            GetBuilder<AuthController>(
-                                init: AuthController(),
-                                builder: (googleController) {
-                                  return GoogleButtonBuilder(
-                                    onTap: () {
-                                      googleController.googleSignIn();
-                                    },
-                                    buttonText: "Login with Google",
-                                    color: accentColor,
-                                  );
-                                }),
-                            const SizedBox(height: 40),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "Don't have an account? ",
-                                        style: textStyleMontserratL(
-                                          15,
-                                          defTextColor,
-                                        ),
+                    ),
+                    const SizedBox(height: 50),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5.0,
+                        horizontal: 20,
+                      ),
+                      child: Column(
+                        children: [
+                          InputBuilder(
+                            fieldController: emailController,
+                            inputHead: "Email",
+                            hintText: "Enter your Email",
+                            type: "email",
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          PasswordInputBuilder(
+                            fieldController: passwordController,
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          FlatButtonBuilder(
+                            onTap: () {
+                              final email = emailController.text.trim();
+                              final password = passwordController.text.trim();
+                              if (email.isEmpty || password.isEmpty) {
+                                Get.snackbar(
+                                    "Error", "Email or Password is empty");
+                              } else {
+                                authController.signIn(email, password);
+                              }
+                            },
+                            buttonText: "Login",
+                            color: accentColor,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          GetBuilder<AuthController>(
+                              init: AuthController(),
+                              builder: (googleController) {
+                                return GoogleButtonBuilder(
+                                  onTap: () {
+                                    googleController.googleSignIn();
+                                  },
+                                  buttonText: "Login with Google",
+                                  color: accentColor,
+                                );
+                              }),
+                          const SizedBox(height: 40),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Don't have an account? ",
+                                      style: textStyleMontserratL(
+                                        15,
+                                        defTextColor,
                                       ),
-                                      TextSpan(
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            Get.offAll(() => SignUpPage());
-                                          },
-                                        text: "Register",
-                                        style: textStyleMontserratSB(
-                                          15,
-                                          defTextColor,
-                                        ),
+                                    ),
+                                    TextSpan(
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Get.offAll(() => SignUpPage());
+                                        },
+                                      text: "Register",
+                                      style: textStyleMontserratSB(
+                                        15,
+                                        defTextColor,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  );
-                }),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
