@@ -7,6 +7,7 @@ import 'package:ninjastudy_task/views/colors.dart';
 import 'package:ninjastudy_task/views/signup_page.dart';
 import 'package:ninjastudy_task/views/widgets/button_builder.dart';
 import 'package:ninjastudy_task/views/widgets/input_builder.dart';
+import 'package:ninjastudy_task/views/widgets/styles.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -33,14 +34,11 @@ class LoginPage extends StatelessWidget {
                       Container(
                         alignment: const Alignment(0.0, 0.0),
                         child: Column(
-                          children: <Widget>[
+                          children: [
                             const SizedBox(height: 40),
                             Text(
                               "Login",
-                              style: TextStyle(
-                                fontSize: 30,
-                                color: defTextColor,
-                              ),
+                              style: textStyleMontserratM(28, defTextColor),
                             ),
                           ],
                         ),
@@ -83,12 +81,12 @@ class LoginPage extends StatelessWidget {
                               color: accentColor,
                             ),
                             const SizedBox(
-                              height: 30,
+                              height: 20,
                             ),
                             GetBuilder<AuthController>(
                                 init: AuthController(),
                                 builder: (googleController) {
-                                  return FlatButtonBuilder(
+                                  return GoogleButtonBuilder(
                                     onTap: () {
                                       googleController.googleSignIn();
                                     },
@@ -96,7 +94,7 @@ class LoginPage extends StatelessWidget {
                                     color: accentColor,
                                   );
                                 }),
-                            const SizedBox(height: 25),
+                            const SizedBox(height: 40),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -105,10 +103,9 @@ class LoginPage extends StatelessWidget {
                                     children: [
                                       TextSpan(
                                         text: "Don't have an account? ",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: defTextColor,
-                                          fontFamily: "Gilroy",
+                                        style: textStyleMontserratL(
+                                          15,
+                                          defTextColor,
                                         ),
                                       ),
                                       TextSpan(
@@ -117,11 +114,9 @@ class LoginPage extends StatelessWidget {
                                             Get.offAll(() => SignUpPage());
                                           },
                                         text: "Register",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: defTextColor,
-                                          fontFamily: "Gilroy",
-                                          fontWeight: FontWeight.w600,
+                                        style: textStyleMontserratSB(
+                                          15,
+                                          defTextColor,
                                         ),
                                       ),
                                     ],

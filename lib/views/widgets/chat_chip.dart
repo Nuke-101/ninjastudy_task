@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ninjastudy_task/views/colors.dart';
+import 'package:ninjastudy_task/views/widgets/styles.dart';
 
 class ChatChip extends StatelessWidget {
   const ChatChip({
@@ -41,10 +42,7 @@ class ChatChip extends StatelessWidget {
                         )),
               child: Text(
                 text,
-                style: const TextStyle(
-                  color: white,
-                  fontSize: 15,
-                ),
+                style: textStyleMontserratL(16, white),
               ),
             ),
           ),

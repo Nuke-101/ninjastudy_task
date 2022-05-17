@@ -68,9 +68,9 @@ class AuthController extends GetxController {
     print("Google signin started");
 
     try {
-      googleAccount.value = await _googleSignIn.signOut();
-      if (googleAccount.value == null) {
-        Get.offAll(LoginPage());
+      googleAccount.value = await _googleSignIn.signIn();
+      if (googleAccount.value != null) {
+        Get.offAll(HomePage());
       }
       print(googleAccount);
     } catch (error) {

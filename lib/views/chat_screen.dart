@@ -7,6 +7,7 @@ import 'package:ninjastudy_task/controllers/conversation_controller.dart';
 import 'package:ninjastudy_task/model/conversation_model.dart';
 import 'package:ninjastudy_task/views/colors.dart';
 import 'package:ninjastudy_task/views/widgets/chat_chip.dart';
+import 'package:ninjastudy_task/views/widgets/styles.dart';
 
 class ChatScreen extends GetView<ChatController> {
   ChatScreen({Key? key, required this.category}) : super(key: key);
@@ -36,11 +37,7 @@ class ChatScreen extends GetView<ChatController> {
         ),
         title: Text(
           category + " Chat",
-          style: const TextStyle(
-            color: defTextColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
+          style: appBarStyle,
         ),
         actions: [
           IconButton(
@@ -83,12 +80,9 @@ class ChatScreen extends GetView<ChatController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             "Speak the  ",
-                            style: TextStyle(
-                              color: defTextColor,
-                              fontSize: 12,
-                            ),
+                            style: textStyleMontserratL(12, defTextColor),
                           ),
                           Container(
                             height: 25,
@@ -98,22 +92,16 @@ class ChatScreen extends GetView<ChatController> {
                               color: accentLight,
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 " bubble text ",
-                                style: TextStyle(
-                                  color: white,
-                                  fontSize: 12,
-                                ),
+                                style: textStyleMontserratL(12, white),
                               ),
                             ),
                           ),
-                          const Text(
+                          Text(
                             "  to continue",
-                            style: TextStyle(
-                              color: defTextColor,
-                              fontSize: 12,
-                            ),
+                            style: textStyleMontserratL(12, defTextColor),
                           ),
                         ],
                       )
@@ -128,19 +116,38 @@ class ChatScreen extends GetView<ChatController> {
             child: Stack(
               children: [
                 Container(
-                  height: 60,
+                  height: 70,
                   width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(20, 5, 60, 5),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 70, 10),
                   decoration: BoxDecoration(
                     color: accentColor.withOpacity(.15),
                   ),
                   child: Obx(
-                    () => Text(controller.spokenText.value),
+                    () => Container(
+                      height: 40,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: accentColor.withOpacity(.15),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          controller.spokenText.value.isNotEmpty
+                              ? controller.spokenText.value
+                              : "Spoken text will appear here",
+                          style: controller.spokenText.value.isNotEmpty
+                              ? textStyleMontserratM(15, defTextColor)
+                              : textStyleMontserratL(
+                                  13, defTextColor.withOpacity(.7)),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Positioned(
-                  top: 5,
-                  right: 5,
+                  top: 10,
+                  right: 10,
                   child: Obx(
                     () => GestureDetector(
                       onTapDown: (details) {

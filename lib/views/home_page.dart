@@ -4,6 +4,8 @@ import 'package:ninjastudy_task/controllers/chat_controller.dart';
 import 'package:ninjastudy_task/controllers/conversation_controller.dart';
 import 'package:ninjastudy_task/views/chat_screen.dart';
 import 'package:ninjastudy_task/views/colors.dart';
+import 'package:ninjastudy_task/views/widgets/conversation_card.dart';
+import 'package:ninjastudy_task/views/widgets/styles.dart';
 
 import '../controllers/auth_controller.dart';
 
@@ -24,11 +26,7 @@ class HomePage extends GetView<ConversationController> {
         elevation: 0,
         title: const Text(
           "Product Authentication",
-          style: TextStyle(
-            color: defTextColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
+          style: appBarStyle,
         ),
       ),
       floatingActionButton: GestureDetector(
@@ -40,8 +38,17 @@ class HomePage extends GetView<ConversationController> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     ListTile(
-                      leading: new Icon(Icons.mic),
-                      title: new Text('Interview'),
+                      leading: const Icon(
+                        Icons.mic,
+                        color: defTextColor,
+                      ),
+                      title: Text(
+                        'Interview',
+                        style: textStyleMontserratR(
+                          16,
+                          defTextColor,
+                        ),
+                      ),
                       onTap: () {
                         Get.to(ChatScreen(
                           category: "Interview",
@@ -49,8 +56,17 @@ class HomePage extends GetView<ConversationController> {
                       },
                     ),
                     ListTile(
-                      leading: new Icon(Icons.food_bank),
-                      title: new Text('Restaurant'),
+                      leading: const Icon(
+                        Icons.food_bank,
+                        color: defTextColor,
+                      ),
+                      title: Text(
+                        'Restaurant',
+                        style: textStyleMontserratR(
+                          16,
+                          defTextColor,
+                        ),
+                      ),
                       onTap: () {
                         Get.to(ChatScreen(
                           category: "Restaurant",
@@ -80,17 +96,14 @@ class HomePage extends GetView<ConversationController> {
               Icon(
                 Icons.chat_bubble_outline,
                 color: white,
+                size: 18,
               ),
               SizedBox(
                 width: 10,
               ),
               Text(
                 'Start a conversation',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: white,
-                  fontWeight: FontWeight.w400,
-                ),
+                style: fabTextStyle,
               ),
             ],
           ),
@@ -120,92 +133,20 @@ class HomePage extends GetView<ConversationController> {
                                 horizontal: 15.0,
                                 vertical: 5,
                               ),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 8),
-                                width: double.infinity,
-                                height: 70,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: defTextColor.withOpacity(
-                                          .05,
-                                        ),
-                                        blurRadius: 10,
-                                      ),
-                                    ]),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: accentColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: defTextColor.withOpacity(
-                                                .15,
-                                              ),
-                                              blurRadius: 10,
-                                            ),
-                                          ]),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Conversation left at",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color:
-                                                  defTextColor.withOpacity(.5),
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            controller
-                                                .conversation[i].lastSentence,
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                              color: defTextColor,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              child: ConversationCard(
+                                  controller: controller, i: i),
                             ),
                           ),
                       ],
                     )
-                  : const SizedBox(
+                  : SizedBox(
                       height: 300,
                       width: double.infinity,
                       child: Expanded(
                         child: Center(
                           child: Text(
                             "No Conversations",
-                            style: TextStyle(
-                              color: defTextColor,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: textStyleMontserratM(16, defTextColor),
                           ),
                         ),
                       ),

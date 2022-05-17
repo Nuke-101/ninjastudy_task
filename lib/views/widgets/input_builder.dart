@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ninjastudy_task/controllers/obscure_password_controller.dart';
 import 'package:ninjastudy_task/views/colors.dart';
+import 'package:ninjastudy_task/views/widgets/styles.dart';
 
 class InputBuilder extends StatelessWidget {
   const InputBuilder({
@@ -24,12 +25,7 @@ class InputBuilder extends StatelessWidget {
       children: [
         Text(
           inputHead,
-          style: const TextStyle(
-            fontSize: 16,
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w400,
-            color: formFieldTextColor,
-          ),
+          style: labelStyle,
         ),
         const SizedBox(height: 10),
         Container(
@@ -39,24 +35,14 @@ class InputBuilder extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: TextFormField(
-            style: const TextStyle(
-              fontSize: 18,
-              color: formFieldTextColor,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w400,
-            ),
+            style: textFormFieldStyle,
             keyboardType: type != "number"
                 ? TextInputType.emailAddress
                 : TextInputType.number,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: hintText,
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                fontFamily: "Montserrat",
-                fontWeight: FontWeight.w300,
-                color: hintTextColor,
-              ),
+              hintStyle: hintStyle,
             ),
             controller: fieldController,
           ),
@@ -81,12 +67,7 @@ class PasswordInputBuilder extends StatelessWidget {
       children: [
         const Text(
           "Password",
-          style: TextStyle(
-            fontSize: 16,
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w400,
-            color: formFieldTextColor,
-          ),
+          style: labelStyle,
         ),
         const SizedBox(height: 10),
         Container(
@@ -104,22 +85,12 @@ class PasswordInputBuilder extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 45),
                       child: TextFormField(
                         obscureText: controller.invisible,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: formFieldTextColor,
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w400,
-                        ),
+                        style: textFormFieldStyle,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: "Password",
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w300,
-                            color: hintTextColor,
-                          ),
+                          hintStyle: hintStyle,
                         ),
                         controller: fieldController,
                       ),
