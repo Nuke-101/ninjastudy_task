@@ -29,21 +29,12 @@ class ChatScreen extends GetView<ChatController> {
           ),
           onPressed: () {
             Navigator.pop(context);
-            conversationController.update();
           },
         ),
         title: Text(
           category + " Chat",
           style: appBarStyle,
         ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.logout_outlined,
-                color: Color.fromARGB(255, 48, 18, 7),
-              )),
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

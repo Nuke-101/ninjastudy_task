@@ -14,7 +14,7 @@ class AuthController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   var googleAccount = Rx<GoogleSignInAccount?>(null);
 
-  final userStatus = "";
+  final userStatus = "LoggedOut";
 
   @override
   void onInit() async {
@@ -68,8 +68,11 @@ class AuthController extends GetxController {
     try {
       var userStatus = storage.read("userStatus");
       bool isGoogleSignedIn = await _googleSignIn.isSignedIn();
-      if (userStatus == "" || userStatus == "LoggedIn") {
+      print(googleAccount);
+
+      if (userStatus == "LoggedIn") {
         storage.write("userStatus", "LoggedOut");
+        print(userStatus);
         Get.offAll(LoginPage());
       } else if (isGoogleSignedIn) {
         _googleSignIn.signOut();
@@ -94,7 +97,7 @@ class AuthController extends GetxController {
 
   Future<bool> getLocalDetails() async {
     var userStatus = storage.read("userStatus");
-    if (userStatus == "" || userStatus == "loggedOut") {
+    if (userStatus == "loggedOut") {
       return false;
     } else {
       return true;
@@ -103,7 +106,6 @@ class AuthController extends GetxController {
 
   Future<bool> getGoogleDetails() async {
     var bool = await GoogleSignIn().isSignedIn();
-
     if (bool) {
       return true;
     } else {
@@ -112,7 +114,9 @@ class AuthController extends GetxController {
   }
 
   Future<bool> getPage() async {
-    if (isGoogleLogin.value || isLocalLogin.value) {
+    var userStatus = storage.read("userStatus");
+    bool isGoogleSignedIn = await _googleSignIn.isSignedIn();
+    if (userStatus == "LoggedIn" || isGoogleSignedIn) {
       return true;
     } else {
       return false;

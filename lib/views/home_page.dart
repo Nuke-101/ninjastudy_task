@@ -24,7 +24,7 @@ class HomePage extends GetView<ConversationController> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Product Authentication",
+          "Ninja App",
           style: appBarStyle,
         ),
         actions: [
@@ -120,56 +120,42 @@ class HomePage extends GetView<ConversationController> {
         ),
       ),
       body: SingleChildScrollView(
-          child: FutureBuilder(
-        future: controller.getConversations(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Obx(
-              () => controller.conversation.isNotEmpty
-                  ? Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        for (int i = 0; i < controller.conversation.length; i++)
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(ChatScreen(
-                                category: "restaurant",
-                              ));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0,
-                                vertical: 5,
-                              ),
-                              child: ConversationCard(
-                                  controller: controller, i: i),
-                            ),
+        child: Obx(
+          () => controller.conversation.isNotEmpty
+              ? Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    for (int i = 0; i < controller.conversation.length; i++)
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(ChatScreen(
+                            category: "restaurant",
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0,
+                            vertical: 5,
                           ),
-                      ],
-                    )
-                  : SizedBox(
-                      height: 300,
-                      width: double.infinity,
-                      child: Expanded(
-                        child: Center(
-                          child: Text(
-                            "No Conversations",
-                            style: textStyleMontserratM(16, defTextColor),
-                          ),
+                          child: ConversationCard(controller: controller, i: i),
                         ),
                       ),
+                  ],
+                )
+              : SizedBox(
+                  height: 300,
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      "No Conversations",
+                      style: textStyleMontserratM(16, defTextColor),
                     ),
-            );
-          }
-          {
-            return const CircularProgressIndicator(
-              color: accentColor,
-            );
-          }
-        },
-      )),
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }
