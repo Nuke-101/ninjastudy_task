@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:ninjastudy_task/controllers/auth_controller.dart';
 import 'package:ninjastudy_task/views/colors.dart';
 import 'package:ninjastudy_task/views/signup_page.dart';

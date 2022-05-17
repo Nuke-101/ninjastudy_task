@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:ninjastudy_task/controllers/chat_controller.dart';
 import 'package:ninjastudy_task/controllers/conversation_controller.dart';
-import 'package:ninjastudy_task/model/conversation_model.dart';
 import 'package:ninjastudy_task/views/colors.dart';
 import 'package:ninjastudy_task/views/widgets/chat_chip.dart';
 import 'package:ninjastudy_task/views/widgets/styles.dart';
@@ -126,7 +123,7 @@ class ChatScreen extends GetView<ChatController> {
                     () => Container(
                       height: 40,
                       width: double.infinity,
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: accentColor.withOpacity(.15),
                         borderRadius: BorderRadius.circular(15),

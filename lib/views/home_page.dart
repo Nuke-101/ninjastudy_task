@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ninjastudy_task/controllers/chat_controller.dart';
 import 'package:ninjastudy_task/controllers/conversation_controller.dart';
 import 'package:ninjastudy_task/views/chat_screen.dart';
 import 'package:ninjastudy_task/views/colors.dart';
@@ -28,6 +27,17 @@ class HomePage extends GetView<ConversationController> {
           "Product Authentication",
           style: appBarStyle,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              authController.signOut();
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: defTextColor,
+            ),
+          ),
+        ],
       ),
       floatingActionButton: GestureDetector(
         onTap: () async {

@@ -6,7 +6,6 @@ class ConversationController extends GetxController {
 
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     await getConversations();
   }

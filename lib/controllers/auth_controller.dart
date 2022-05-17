@@ -14,9 +14,10 @@ class AuthController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   var googleAccount = Rx<GoogleSignInAccount?>(null);
 
+  final userStatus = "";
+
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     isLocalLogin.value = await getLocalDetails();
     isGoogleLogin.value = await getGoogleDetails();
@@ -34,9 +35,8 @@ class AuthController extends GetxController {
     try {
       if (validatePassword(password) && GetUtils.isEmail(email)) {
         storage.write("email", email);
-        print(storage.read("email"));
         storage.write("password", password);
-        print(storage.read("password"));
+        storage.write("userStatus", "LoggedIn");
         Get.offAll(HomePage());
       } else if (!validatePassword(password)) {
         Get.snackbar("Password Error",
@@ -45,7 +45,6 @@ class AuthController extends GetxController {
         Get.snackbar("Email Error", "Please enter valid email");
       }
     } catch (e) {
-      print(e);
       Get.snackbar("Error", "Couldn't signUp");
     }
   }
@@ -55,18 +54,33 @@ class AuthController extends GetxController {
       var storedEmail = storage.read("email");
       var storedPassword = storage.read("password");
       if (storedEmail == email && storedPassword == password) {
+        storage.write("userStatus", "LoggedIn");
         Get.offAll(HomePage());
       } else {
         Get.snackbar("Error", "Error logging in, credentials don't match");
       }
     } catch (e) {
-      print(e);
+      Get.snackbar("Error", "Couldn't signIn");
+    }
+  }
+
+  Future<dynamic> signOut() async {
+    try {
+      var userStatus = storage.read("userStatus");
+      bool isGoogleSignedIn = await _googleSignIn.isSignedIn();
+      if (userStatus == "" || userStatus == "LoggedIn") {
+        storage.write("userStatus", "LoggedOut");
+        Get.offAll(LoginPage());
+      } else if (isGoogleSignedIn) {
+        _googleSignIn.signOut();
+        Get.offAll(LoginPage());
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Error Signing out");
     }
   }
 
   Future<dynamic> googleSignIn() async {
-    print("Google signin started");
-
     try {
       googleAccount.value = await _googleSignIn.signIn();
       if (googleAccount.value != null) {
@@ -79,15 +93,10 @@ class AuthController extends GetxController {
   }
 
   Future<bool> getLocalDetails() async {
-    var storedEmail = storage.read("email");
-    var storedPassword = storage.read("password");
-    if (storedEmail == null || storedPassword == null) {
-      print("email");
-      print(false);
+    var userStatus = storage.read("userStatus");
+    if (userStatus == "" || userStatus == "loggedOut") {
       return false;
     } else {
-      print("email");
-      print(true);
       return true;
     }
   }
@@ -96,12 +105,8 @@ class AuthController extends GetxController {
     var bool = await GoogleSignIn().isSignedIn();
 
     if (bool) {
-      print("google");
-      print(true);
       return true;
     } else {
-      print("google");
-      print(false);
       return false;
     }
   }

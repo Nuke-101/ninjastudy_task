@@ -89,12 +89,8 @@ class ChatController extends GetxController {
 
   void startListening(TapDownDetails details) async {
     bool available = await speechToText.initialize(
-      onStatus: (status) {
-        print(status);
-      },
-      onError: (error) {
-        print(error);
-      },
+      onStatus: (status) {},
+      onError: (error) {},
     );
     if (available) {
       isListening.value = true;
