@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ninjastudy_task/model/chat_model.dart';
+import 'package:ninjastudy_task/views/widgets/chat_chip.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,7 +13,13 @@ class ChatController extends GetxController {
   var spokenText = "".obs;
   late SpeechToText speechToText;
 
+  int dialogNumber = 0;
+
+  var isSpokenCorrect = false.obs;
+
   List<Chat> dialogues = [];
+
+  List chats = [];
 
   @override
   void onInit() async {
@@ -19,9 +27,25 @@ class ChatController extends GetxController {
     super.onInit();
     speechToText = SpeechToText();
     dialogues = await fetchDialogs();
+    getDialogues();
   }
 
-  Future<dynamic> getDialogues() async {}
+  Future<dynamic> getDialogues() async {
+    if (dialogNumber < dialogues.length) {
+      if (dialogNumber == 0 ||
+          spokenText.value.toLowerCase() ==
+              dialogues[dialogNumber - 1].humanSentence.toLowerCase()) {
+        chats.add(dialogues[dialogNumber]);
+        dialogNumber++;
+        update();
+      } else {
+        update();
+        return;
+      }
+    }
+  }
+
+  Future compareDialogues() async {}
 
   Future fetchDialogs() async {
     final url =
@@ -57,6 +81,7 @@ class ChatController extends GetxController {
         listenMode: ListenMode.dictation,
         onResult: (value) {
           spokenText.value = value.recognizedWords;
+          getDialogues();
         },
       );
     }

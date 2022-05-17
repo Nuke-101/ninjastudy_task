@@ -5,37 +5,51 @@ class ChatChip extends StatelessWidget {
   const ChatChip({
     Key? key,
     required this.text,
+    required this.isHuman,
   }) : super(key: key);
 
   final String text;
+  final bool isHuman;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 200),
-        child: Container(
-          margin: EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          decoration: const BoxDecoration(
-              color: accentColor,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              )),
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: white,
-              fontSize: 15,
+    return Row(
+      mainAxisAlignment:
+          isHuman ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 200),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              decoration: BoxDecoration(
+                  color: accentColor,
+                  borderRadius: isHuman
+                      ? const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        )
+                      : const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        )),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  color: white,
+                  fontSize: 15,
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -55,13 +55,27 @@ class ChatScreen extends GetView<ChatController> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: FutureBuilder(
-                  future: controller.getDialogues(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    return const ChatChip(
-                      text: "Hello",
-                    );
-                  }),
+              physics: const BouncingScrollPhysics(),
+              child: GetBuilder<ChatController>(
+                init: ChatController(),
+                builder: (chatController) {
+                  return Column(
+                    children: [
+                      for (int i = 0; i < chatController.chats.length; i++)
+                        Column(
+                          children: [
+                            ChatChip(
+                                text: chatController.chats[i].botSentence,
+                                isHuman: false),
+                            ChatChip(
+                                text: chatController.chats[i].humanSentence,
+                                isHuman: true),
+                          ],
+                        )
+                    ],
+                  );
+                },
+              ),
             ),
           ),
           ConstrainedBox(
